@@ -75,12 +75,12 @@ export default function SettingPage() {
       setAppVersion(version);
     });
 
-    window.electronAPI?.OnUpdateAvailable?.((data) => {
+    window.electronAPI?.onUpdateAvailable?.((data) => {
       setUpdateAvailable(true);
       setUpdateVersion(data.version);
     });
 
-    window.electronAPI?.OnUpdateDownloaded?.((data) => {
+    window.electronAPI?.onUpdateDownloaded?.((data) => {
       setUpdateDownloaded(true);
       setUpdateVersion(data.version);
     });

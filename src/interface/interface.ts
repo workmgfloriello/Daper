@@ -59,8 +59,10 @@ export type ElectronApi = {
   updateUser?: (user: User) => any;
 
  // update
-  OnUpdateAvailable?: (callback: (data: { version: string }) => void) => void;
-  OnUpdateDownloaded?: (callback: (data: { version: string }) => void) => void;
-  installUpdate?: () => Promise<any>;
-  getVersion?: () => Promise<string>;
+  // update
+onUpdateAvailable?: (callback: (data: { version: string }) => void) => void;
+onUpdateDownloaded?: (callback: (data: { version: string }) => void) => void;
+downloadUpdate?: () => Promise<any>;
+installUpdate?: () => Promise<any>;
+getVersion?: () => Promise<string>;
 };

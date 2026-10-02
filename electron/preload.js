@@ -35,19 +35,22 @@ contextBridge.exposeInMainWorld("electronAPI", {
   selectUser: () => ipcRenderer.invoke("user:select"),
   updateUser: (user) => ipcRenderer.invoke("user:update", user),
 
-  //update
-  onUpdateAvailable: (callback) => {
-    ipcRenderer.on("update-available", (_event, data) => {
-      callback(data);
-    });
-  },
+  // update
+onUpdateAvailable: (callback) => {
+  ipcRenderer.on("update-available", (_event, data) => {
+    callback(data);
+  });
+},
 
-  onUpdateDownloaded: (callback) => {
-    ipcRenderer.on("update-downloaded", (_event, data) => {
-      callback(data);
-    });
-  },
+onUpdateDownloaded: (callback) => {
+  ipcRenderer.on("update-downloaded", (_event, data) => {
+    callback(data);
+  });
+},
 
-  installUpdate: () => ipcRenderer.invoke("update:install"),
-  getVersion: () => ipcRenderer.invoke("app:get-version"),
+downloadUpdate: () => ipcRenderer.invoke("update:download"),
+
+installUpdate: () => ipcRenderer.invoke("update:install"),
+
+getVersion: () => ipcRenderer.invoke("app:get-version"),
 });
