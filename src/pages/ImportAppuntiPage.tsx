@@ -1,42 +1,58 @@
-import { File } from "@/interface/interface";
 import { useCourses } from "@/lib/context/CoursesContext";
-import { useFiles } from "@/lib/context/NotesContext";
-import { generateUUID } from "@/lib/utils/uuid";
+import { File } from "@/interface/interface";
+import FileManager from "@/lib/manager/FileManager";
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import { generateUUID } from "@/lib/utils/uuid";
+import { useFiles } from "@/lib/context/NotesContext";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateAppuntiPage() {
+export default function ImportAppuntiPage() {
+  const [file, setFile] = useState<any>(null);
+  const [fileNamePreview, setFileNamePreview] = useState("");
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
+
   const { createFile } = useFiles();
   const { courses, updateNoteCount } = useCourses();
 
-  const navigate = useNavigate();
+  //Uso Manager per copiare il file selezionato nella cartella dei file dell'applicazione e creare un nuovo file con le informazioni inserite dall'utente
+  const handleFileSelectClick = async () => {
+    const fileData = await FileManager.openFileForImport();
+    setName(fileData.metadata.name);
+    setFileNamePreview(fileData.metadata.name);
+    setFile(fileData);
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!name.trim() || !course.trim()) {
+  /* Creo nuovo file con le informazioni inserite dall'utente
+     ma inserisco il contenuto del file importato mantenendo solamente il name */
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+    event,
+  ) => {
+    event.preventDefault();
+    if (!file || !course.trim()) {
       return;
     }
 
     const newFile: File = {
       id: generateUUID(),
       name: name,
-      description: description,
       course: course,
+      description: description,
       created_at: new Date(),
-      content: [],
+      content: file.content || [],
     };
 
     const create = await createFile(newFile);
-
+    console.log(create);
     if (create) {
       const update = await updateNoteCount(course, 1);
-      console.log("UPDATE: "+update);
+      console.log("UPDATE: " + update);
       navigate(`/editor/${encodeURIComponent(newFile.name)}`);
+    } else {
+      console.error("Errore durante la creazione del file");
     }
   };
 
@@ -58,26 +74,42 @@ export default function CreateAppuntiPage() {
         >
           <div>
             <h1 className="text-2xl font-bold text-indigo-950 dark:text-[#cccccc]">
-              Nuovo appunto
+              Importa un appunto
             </h1>
 
             <p className="mt-1 text-sm text-indigo-600 dark:text-[#9d9d9d]">
-              Inserisci le informazioni del tuo appunto.
+              Inserisci le informazioni per importare il tuo appunto.
             </p>
           </div>
 
           <div>
             <label className="mb-2 block text-sm font-medium text-indigo-900 dark:text-[#cccccc]">
-              Nome appunto
+              File
+            </label>
+
+            <div
+              onClick={handleFileSelectClick}
+              className="flex w-full cursor-pointer items-center justify-center border-4 border-dashed border-gray-400 p-6 rounded-lg py-6 bg-indigo-50/40 px-3 text-sm text-indigo-900 transition-colors hover:border-indigo-500 hover:bg-indigo-50 dark:border-[#3c3c3c] dark:bg-[#1e1e1e] dark:text-[#cccccc] dark:hover:bg-[#1e1e1e]"
+            >
+              {fileNamePreview ? (
+                <span>{fileNamePreview}</span>
+              ) : (
+                <span>Seleziona file</span>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-indigo-900 dark:text-[#cccccc]">
+              Modifica nome del File
             </label>
 
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Es. Derivate e integrali"
+              placeholder="Nome file..."
               className="w-full rounded-lg border border-indigo-200 bg-indigo-50/40 px-3 py-2 text-indigo-900 placeholder:text-indigo-300 outline-none transition-colors focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-100 dark:border-[#3c3c3c] dark:bg-[#1e1e1e] dark:text-[#cccccc] dark:placeholder:text-[#6e6e6e] dark:focus:border-[#007acc] dark:focus:bg-[#1e1e1e] dark:focus:ring-0"
-              autoFocus
             />
           </div>
 
@@ -116,10 +148,10 @@ export default function CreateAppuntiPage() {
 
           <button
             type="submit"
-            disabled={!name.trim() || !course.trim()}
+            disabled={!file || !course.trim()}
             className="w-full rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-indigo-200 disabled:text-indigo-400 dark:bg-[#007acc] dark:hover:bg-[#1a85c7] dark:disabled:bg-[#3c3c3c] dark:disabled:text-[#6e6e6e]"
           >
-            Crea appunto
+            Importa appunto
           </button>
         </form>
       </div>

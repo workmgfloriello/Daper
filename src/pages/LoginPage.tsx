@@ -145,7 +145,7 @@ export default function LoginPage() {
               >
                 {loadingUi
                   ? "Creazione profilo..."
-                  : "Inizia con StuPaper"}
+                  : "Inizia con Daper"}
               </button>
             </form>
 
@@ -156,7 +156,7 @@ export default function LoginPage() {
 
           {/* Footer */}
           <p className="mt-6 text-center text-xs text-gray-400 dark:text-[#666666]">
-            StuPaper
+            Daper
           </p>
         </div>
       </div>

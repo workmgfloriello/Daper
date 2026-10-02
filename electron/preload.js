@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   selectFile: () => ipcRenderer.invoke("file:select"),
   delateFile: (fileName) => ipcRenderer.invoke("file:delate", fileName),
   renameFile: (fileName, newName) => ipcRenderer.invoke("file:rename", fileName, newName),
+  importFile: () => ipcRenderer.invoke("file:import_file"),
 
   //course
   insertCourse: (course) => ipcRenderer.invoke("courses:insert", course),
@@ -27,5 +28,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   //user
   insertUser: (user) => ipcRenderer.invoke("user:create",user),
   selectUser: () => ipcRenderer.invoke("user:select"),
-  updateUser: (user) => ipcRenderer.invoke("user:update",user)
+  updateUser: (user) => ipcRenderer.invoke("user:update",user),
 });

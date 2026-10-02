@@ -15,10 +15,11 @@ export interface Course {
 export type File = {
   id: string,
   name: string,
-  directory: string,
+  directory?: string,
   course: string,
   description?: string,
   created_at: Date,
+  content?: any
 }
 
 export type User = {
@@ -52,6 +53,7 @@ export type ElectronApi = {
   delateFile?: (fileName: string) => any;
   renameFile?: (fileName: string, newName: string) => any;
   updateCourse: (courseId: string, course: any) => any;
+  importFile?: () => any;
 
   //User
   insertUser?: (user:User) => any

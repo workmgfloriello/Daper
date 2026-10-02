@@ -44,7 +44,7 @@ export default function FrameTopbar() {
         {/* Logo / Titolo */}
         <div className="flex items-center pl-3">
           <span className="text-xs tracking-wide font-bold text-gray-100">
-            StuPaper
+            Daper
           </span>
         </div>
 

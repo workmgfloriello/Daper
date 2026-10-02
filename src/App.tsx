@@ -16,6 +16,7 @@ import { CourseInfoPage } from "./pages/CourseInfoPage";
 import { UserProvider } from "./lib/context/UserContext";
 import SettingPage from "./pages/SettingPage";
 import CalendarioPage from "./pages/CalendarioPage";
+import ImportAppuntiPage from "./pages/ImportAppuntiPage";
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
                       element={<AppuntiPage />}
                     />
                     <Route path="/newappunti" element={<CreateAppuntiPage />} />
+                    <Route path="/importappunti" element={<ImportAppuntiPage />} />
                     <Route
                       path="/corsi/:corsoId"
                       element={<CourseInfoPage />}

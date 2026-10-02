@@ -39,10 +39,12 @@ class CustomFileManager {
   }
 
   async createFile(file: File) {
+
     const create = window.electronAPI?.createFile?.(file);
     return create;
   }
 
+  //Dall'editor, quando l'utente clicca su "Apri file", viene chiamata questa funzione che apre il file selezionato e lo carica nell'editor
   async openFile(fileName: string = "") {
     const openFile = window.electronAPI?.openFile;
 
@@ -74,6 +76,21 @@ class CustomFileManager {
     );
 
     return this.fileData;
+  }
+
+  //Per ImportAppuntiPage, quando l'utente clicca su "Seleziona file", viene chiamata questa funzione che apre il file selezionato e lo carica nell'editor
+  //ritora solo il contenuto del file selezionato senza caricarlo nell'editorù
+
+  async openFileForImport() {
+    const importFile = window.electronAPI?.importFile;
+
+    if (!importFile) {
+      console.error("Apertura file non disponibile");
+      return;
+    }
+    const selectedFileName = await importFile();
+
+    return JSON.parse(selectedFileName);
   }
 
   async saveFile() {
@@ -116,8 +133,8 @@ class CustomFileManager {
   }
 
   renameFile(fileName: string, newName: string) {
-    const rename = window.electronAPI?.renameFile?.(fileName,newName);
-    return rename
+    const rename = window.electronAPI?.renameFile?.(fileName, newName);
+    return rename;
   }
 
   //UTIL

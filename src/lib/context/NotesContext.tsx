@@ -83,6 +83,7 @@ export function FilesProvider({ children }: { children: ReactNode }) {
   }
 
   async function createFile(newFile: File) {
+    console.log(newFile);
     const result = await FileManager.createFile(newFile);
 
     if (result?.success && result.file) {

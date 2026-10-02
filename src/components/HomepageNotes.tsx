@@ -1,5 +1,3 @@
-"use client";
-
 import { useCourses } from "@/lib/context/CoursesContext";
 import { useFiles } from "@/lib/context/NotesContext";
 import { useTheme } from "@/lib/context/ThemeContext";
@@ -11,10 +9,8 @@ export default function HomepageNotes() {
   const { files } = useFiles();
   const { courses } = useCourses();
   const { palette } = useTheme();
-
   const [selectedCourse, setSelectedCourse] = useState("all");
   const [textCourse, setTextCourse] = useState("");
-
   const { appuntiFilter } = useParams();
   const navigate = useNavigate();
 
@@ -58,40 +54,12 @@ export default function HomepageNotes() {
           <input
             type="text"
             placeholder="Cerca un appunto..."
-            className="
-              flex-1
-              rounded-lg
-              border border-gray-200
-              bg-white
-              px-4 py-3
-              text-sm text-gray-900
-              outline-none
-              transition
-              placeholder:text-gray-400
-              focus:border-gray-400
-              dark:border-[#3c3c3c]
-              dark:bg-[#1e1e1e]
-              dark:text-[#cccccc]
-              dark:placeholder:text-[#6e6e6e]
-              dark:focus:border-[#007acc]
-            "
+            className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-400 dark:border-[#3c3c3c] dark:bg-[#1e1e1e] dark:text-[#cccccc] dark:placeholder:text-[#6e6e6e] dark:focus:border-[#007acc]"
             onChange={handleTextChange}
           />
 
           <select
-            className="
-              rounded-lg
-              border border-gray-200
-              bg-white
-              px-4 py-3
-              text-sm text-gray-600
-              outline-none
-              transition
-              dark:border-[#3c3c3c]
-              dark:bg-[#1e1e1e]
-              dark:text-[#cccccc]
-              dark:focus:border-[#007acc]
-            "
+            className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm text-gray-600 outline-none transition dark:border-[#3c3c3c] dark:bg-[#1e1e1e] dark:text-[#cccccc] dark:focus:border-[#007acc]"
             onChange={handleSelectChange}
             value={selectedCourse}
           >
@@ -106,19 +74,16 @@ export default function HomepageNotes() {
 
           <Link
             to="/newappunti"
-            className="
-              rounded-lg
-              bg-black
-              px-5 py-3
-              text-center
-              text-sm font-medium text-white
-              transition
-              hover:bg-gray-800
-              dark:bg-[#007acc]
-              dark:hover:bg-[#1a85c7]
-            "
+            className="rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-medium text-white transition hover:bg-gray-800 dark:bg-[#007acc] dark:hover:bg-[#1a85c7]"
           >
             + Crea appunto
+          </Link>
+
+          <Link
+            to="/importappunti"
+            className="rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-medium text-white transition hover:bg-gray-800 dark:bg-[#007acc] dark:hover:bg-[#1a85c7]"
+          >
+            + Importa appunto
           </Link>
         </div>
 
@@ -147,8 +112,7 @@ export default function HomepageNotes() {
               (course) => course.id === note.course,
             );
 
-            const courseName =
-              findCourse?.name ?? "Nessun Corso";
+            const courseName = findCourse?.name ?? "Nessun Corso";
 
             /*
              * course.color contiene:
@@ -160,6 +124,7 @@ export default function HomepageNotes() {
              *
              * La palette invece contiene il vero HEX.
              */
+
             const colorKey =
               findCourse?.color as keyof typeof palette | undefined;
 
@@ -171,34 +136,14 @@ export default function HomepageNotes() {
             return (
               <div
                 key={note.id}
-                className="
-                  group
-                  flex cursor-pointer
-                  items-center justify-between
-                  rounded-xl
-                  border border-gray-200
-                  bg-white
-                  p-5
-                  transition
-                  hover:border-gray-300
-                  hover:shadow-sm
-                  dark:border-[#303030]
-                  dark:bg-[#252526]
-                  dark:hover:border-[#454545]
-                  dark:hover:bg-[#2a2d2e]
-                "
+                className="group flex cursor-pointer items-center justify-between rounded-xl border border-gray-200 bg-white p-5 transition hover:border-gray-300 hover:shadow-sm dark:border-[#303030] dark:bg-[#252526] dark:hover:border-[#454545] dark:hover:bg-[#2a2d2e]"
                 onClick={() => handleOpenClick(note.name)}
               >
                 {/* Icon + info */}
                 <div className="flex min-w-0 items-center gap-4">
                   {/* Icon */}
                   <div
-                    className="
-                      flex h-11 w-11 shrink-0
-                      items-center justify-center
-                      rounded-lg
-                      text-white
-                    "
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-white"
                     style={{
                       backgroundColor: color,
                     }}
@@ -221,12 +166,7 @@ export default function HomepageNotes() {
                         style={{
                           backgroundColor: color,
                         }}
-                        className="
-                          rounded-xl
-                          px-2 py-1
-                          font-bold
-                          text-white
-                        "
+                        className="rounded-xl px-2 py-1 font-bold text-white"
                       >
                         {courseName}
                       </span>
@@ -248,19 +188,7 @@ export default function HomepageNotes() {
                 </div>
 
                 {/* Arrow */}
-                <div
-                  className="
-                    ml-4
-                    flex shrink-0
-                    items-center gap-1
-                    text-gray-300
-                    transition
-                    group-hover:translate-x-1
-                    group-hover:text-gray-500
-                    dark:text-[#6e6e6e]
-                    dark:group-hover:text-[#cccccc]
-                  "
-                >
+                <div className="ml-4 flex shrink-0 items-center gap-1 text-gray-300 transition group-hover:translate-x-1 group-hover:text-gray-500 dark:text-[#6e6e6e] dark:group-hover:text-[#cccccc]">
                   <span className="text-xs font-medium">
                     Apri
                   </span>
@@ -274,18 +202,7 @@ export default function HomepageNotes() {
 
         {/* Empty state */}
         {files.length === 0 && (
-          <div
-            className="
-              rounded-xl
-              border border-dashed border-gray-300
-              bg-white
-              py-16
-              text-center
-              transition-colors
-              dark:border-[#3c3c3c]
-              dark:bg-[#252526]
-            "
-          >
+          <div className="rounded-xl border border-dashed border-gray-300 bg-white py-16 text-center transition-colors dark:border-[#3c3c3c] dark:bg-[#252526]">
             <h2 className="font-semibold text-gray-800 dark:text-[#cccccc]">
               Nessun appunto
             </h2>

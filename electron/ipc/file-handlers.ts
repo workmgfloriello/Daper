@@ -37,16 +37,20 @@ export function registerFileHandlers(win: BrowserWindow, dirPath: string) {
                 course: file.course,
               },
               type: "doc",
-              content: [],
+              content: file.content,
             },
             null,
             2,
           ),
         );
+        console.log(`File ${file.name}.json creato con successo in ${dirPath}`);
         return { success: true, file: note };
       } catch (error) {
+        console.error(`Errore durante la creazione del file ${file.name}.json:`, error);
         return { success: false, file: null };
       }
+    }else{
+      return { success: false, file: null };
     }
   });
 
@@ -66,6 +70,21 @@ export function registerFileHandlers(win: BrowserWindow, dirPath: string) {
     }
 
     const content = fs.readFileSync(`${dirPath}/${fileName}.json`, "utf-8");
+
+    return content;
+  });
+
+  //Import file
+  ipcMain.handle("file:import_file", async () => {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+      properties: ["openFile"],
+      filters: [{ name: "File di testo", extensions: ["json"] }],
+    });
+
+    if (canceled || filePaths.length === 0) {
+      return null;
+    }
+    const content = fs.readFileSync(filePaths[0], "utf-8");
 
     return content;
   });
