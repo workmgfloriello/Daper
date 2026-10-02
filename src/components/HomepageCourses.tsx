@@ -253,7 +253,7 @@ export default function HomepageCourses() {
           className="mb-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-colors dark:border-[#303030] dark:bg-[#252526]"
         >
           <h2 className="mb-6 text-xl font-semibold text-gray-900 dark:text-[#cccccc]">
-            Crea nuovo corso
+            Crea un nuovo corso
           </h2>
 
           <div className="grid gap-5 md:grid-cols-2">
