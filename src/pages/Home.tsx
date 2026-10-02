@@ -1,6 +1,6 @@
 import { useUser } from "@/lib/context/UserContext";
 import GrideBase from "../components/GrideBase";
-import Sidebar from "../components/Sidebar";
+import { Sidebar } from "../components/Sidebar";
 import LoginPage from "./LoginPage";
 
 export default function Home() {

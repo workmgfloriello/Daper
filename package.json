@@ -1,5 +1,5 @@
 {
-  "name": "stupaper",
+  "name": "Daper",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -39,6 +39,7 @@
     "@tiptap/pm": "^3.31.2",
     "@tiptap/react": "^3.31.2",
     "@tiptap/starter-kit": "^3.31.2",
+    "framer-motion": "^13.4.6",
     "highlight.js": "^11.10.0",
     "katex": "^0.18.5",
     "lowlight": "^3.3.0",
@@ -53,7 +54,7 @@
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4",
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^4.3.4",
@@ -71,8 +72,8 @@
     "wait-on": "^9.1.0"
   },
   "build": {
-    "appId": "com.stupaper.app",
-    "productName": "StuPaper",
+    "appId": "com.daper.app",
+    "productName": "Daper",
     "directories": {
       "output": "release"
     },

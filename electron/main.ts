@@ -30,7 +30,7 @@ const documentsPath = path.join(
 
 const databasePath = path.join(
   app.getPath("userData"),
-  "stupaperBase.db",
+  "Daper.db",
 );
 
 // =========================================================
@@ -79,6 +79,8 @@ function createWindow() {
     width: 1400,
     height: 900,
 
+    minWidth:1400,
+    minHeight: 900,
     frame: false,
 
     // IMPORTANTE:
@@ -87,7 +89,7 @@ function createWindow() {
     show: false,
 
     icon: logoPath,
-    title: "StuPaper",
+    title: "Daper",
 
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -143,8 +145,7 @@ function createWindow() {
 }
 
 // =========================================================
-// DATABASE
-// =========================================================
+// DATABASE// =========================================================
 
 async function createDatabase() {
   try {
@@ -238,7 +239,7 @@ app.whenReady().then(async () => {
     });
   } catch (error) {
     console.error(
-      "Errore durante l'avvio di StuPaper:",
+      "Errore durante l'avvio di Daper:",
       error,
     );
 

@@ -48,7 +48,7 @@ export default function Notes() {
 
       {/* Lista scrollabile */}
       <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto divide-y divide-gray-100 dark:divide-[#303030]">
-        {recentNotes.map((note) => {
+        {recentNotes.length > 0 ? (recentNotes.map((note) => {
           const findCourse = courses.find(
             (course) => course.id === note.course
           );
@@ -62,6 +62,7 @@ export default function Notes() {
             colorKey && colorKey in palette
               ? palette[colorKey]
               : palette.color1;
+
 
           return (
             <div
@@ -95,7 +96,16 @@ export default function Notes() {
               </span>
             </div>
           );
-        })}
+            })
+        ) : (
+            <div className="flex items-center justify-center px-4 py-8">
+                <p className="text-sm text-gray-500 dark:text-[#9d9d9d]">
+                    Nessuna Nota Recente
+                </p>
+            </div>
+        )}
+
+
 
         <button className="w-full py-5 text-center text-sm font-medium text-indigo-600 transition hover:text-indigo-800 dark:text-[#4daafc] dark:hover:text-[#75beff]">
           Mostra tutti

@@ -27,6 +27,14 @@ export type User = {
   type: string
 }
 
+
+
+export type EditorCommandView = {
+  name: string;
+  symbol: string;
+  desc: string;
+}
+
 export type ElectronApi = {
   //corsi
   selectCourses?: () => Promise<any[]>;

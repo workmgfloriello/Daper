@@ -103,7 +103,7 @@ function initializeDatabase(database: DatabaseSync) {
         0,
         "Questo è il tuo spazio personale per creare e organizzare rapidamente appunti che non appartengono a un corso specifico.",
         "color1",
-        0,
+        1,
         1,
       );
   }

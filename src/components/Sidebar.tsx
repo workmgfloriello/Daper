@@ -9,7 +9,7 @@ import {
   Plus,
   Settings,
   User,
-  Calendars
+  Calendars, Code2Icon
 } from "lucide-react";
 
 import { Link, useLocation } from "react-router-dom";
@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 import { useCourses } from "../lib/context/CoursesContext";
 import { useTheme } from "@/lib/context/ThemeContext";
 import { useUser } from "@/lib/context/UserContext";
+import BottomBarComponent from "@/components/CommandBarComponents/BottomBarComponent.tsx";
+import { AnimatePresence } from "framer-motion";
 
 const navItems = [
   {
@@ -42,11 +44,12 @@ const navItems = [
   },
 ];
 
-export default function Sidebar() {
+export function Sidebar() {
   const { pathname } = useLocation();
 
   const [open, setOpen] = useState(true);
   const [coursesOpen, setCoursesOpen] = useState(true);
+  const [showCommandPalete, setShowCommandPalette] = useState(false);
 
   const { courses } = useCourses();
   const { user } = useUser();
@@ -60,6 +63,7 @@ export default function Sidebar() {
   }, [pathname]);
 
   return (
+    <>
     <aside
       className={`relative flex h-full min-h-0 shrink-0 flex-col overflow-hidden border-r border-gray-200 bg-white text-gray-900 transition-[width] duration-300 ease-in-out dark:border-[#303030] dark:bg-[#181818] dark:text-[#cccccc] ${
         open ? "w-64" : "w-16"
@@ -95,11 +99,7 @@ export default function Sidebar() {
         >
           <Plus className="h-4 w-4 shrink-0" />
 
-          {open && (
-            <span className="whitespace-nowrap">
-              Nuovo appunto
-            </span>
-          )}
+          {open && <span className="whitespace-nowrap">Nuovo appunto</span>}
         </Link>
       </div>
 
@@ -122,14 +122,32 @@ export default function Sidebar() {
               <Icon className="h-4 w-4 shrink-0" />
 
               {open && (
-                <span className="truncate whitespace-nowrap">
-                  {item.label}
-                </span>
+                <span className="truncate whitespace-nowrap">{item.label}</span>
               )}
             </Link>
           );
         })}
       </nav>
+
+      <hr className="my-5 border-0 ml-3 mr-3 border-t border-gray-200 dark:border-[#3a3d3e]" />
+
+      {/*Palette Comandi*/}
+      <div className="flex shrink-0 flex-col gap-1 px-3">
+        <button
+          type="button"
+          onClick={() => setShowCommandPalette(!showCommandPalete)}
+          className="flex h-10 w-full shrink-0 items-center justify-center gap-3 rounded-lg px-3 text-sm transition hover:bg-indigo-200 hover:text-gray-900 dark:hover:bg-[#2a2d2e] dark:hover:text-[#cccccc] bg-indigo-300 text-indigo-900 dark:bg-[#264f78] dark:text-white"
+        >
+          <Code2Icon className="h-4 w-4 shrink-0" />
+
+          {open && (
+            <span className="truncate whitespace-nowrap">Lista Comandi</span>
+          )}
+        </button>
+      </div>
+
+      <hr className="my-5 border-0 ml-3 mr-3 border-t border-gray-200 dark:border-[#3a3d3e]" />
+
 
       {/* Corsi */}
       <div className="mt-6 min-h-0 flex-1 overflow-hidden px-3">
@@ -153,8 +171,7 @@ export default function Sidebar() {
               <div className="mt-1 min-h-0 overflow-y-auto">
                 <div className="flex flex-col gap-1">
                   {courses.map((course) => {
-                    const active =
-                      pathname === `/corsi/${course.id}`;
+                    const active = pathname === `/corsi/${course.id}`;
                     const color = palette[course.color as keyof typeof palette];
 
                     return (
@@ -176,9 +193,7 @@ export default function Sidebar() {
                           {course.code}
                         </span>
 
-                        <span className="truncate">
-                          {course.name}
-                        </span>
+                        <span className="truncate">{course.name}</span>
                       </Link>
                     );
                   })}
@@ -219,5 +234,10 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
-  );
+
+
+  {/*Mostro Palette Comandi*/}
+        {showCommandPalete && <BottomBarComponent />}
+  </>
+)
 }

@@ -1,5 +1,5 @@
 import { HomepageInfoCourse } from "@/components/infoCourse/HomepageInfoCourse";
-import Sidebar from "@/components/Sidebar";
+import { Sidebar } from "@/components/Sidebar";
 import { useCourses } from "@/lib/context/CoursesContext";
 import { useParams } from "react-router-dom";
 

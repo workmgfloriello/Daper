@@ -36,7 +36,7 @@ import { useParams } from "react-router-dom";
 import FileManager from "../lib/manager/FileManager";
 import FileBar from "./components/FileBar";
 import BottomBar from "./components/BottomBar";
-import Sidebar from "@/components/Sidebar";
+import { Sidebar } from "@/components/Sidebar";
 
 const lowlight = createLowlight({
   javascript,

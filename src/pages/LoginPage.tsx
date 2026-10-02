@@ -50,13 +50,13 @@ export default function LoginPage() {
             <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-gray-200 dark:bg-[#202020] dark:ring-[#303030]">
               <img
                 src="/assets/logo.png"
-                alt="StuPaper"
+                alt="Daper"
                 className="h-14 w-14 object-contain"
               />
             </div>
 
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-[#eeeeee]">
-              Benvenuto in StuPaper
+              Benvenuto in Daper
             </h1>
 
             <p className="mt-2 text-center text-sm text-gray-500 dark:text-[#999999]">

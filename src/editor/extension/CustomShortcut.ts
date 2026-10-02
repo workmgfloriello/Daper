@@ -21,20 +21,52 @@ export default Extension.create<CustomShortcutOptions>({
     }
 
     return [
-      //h[NUmero] per creare un heading di livello [Numero]
+      //tit[NUmero] per creare un heading di livello [Numero]
       new InputRule({
-        find: /\/\/h([1-3])\s$/,
-        handler: ({ state, range, match, chain }) => {
+        find: /\/\/tit([1-3])\s$/,
+        handler: ({ range, match, chain }) => {
           const level = parseInt(match[1], 10);
 
           chain().deleteRange(range).setNode("heading", { level }).run();
         },
       }),
 
-      //code-[linguaggio] per creare un blocco di codice
+      //p er creare un paragrafo
+      new InputRule({
+        find: /\/\/p\s$/,
+        handler: ({ range, chain }) => {
+          chain().deleteRange(range).setParagraph().run();
+        },
+      }),
+
+      //clear pulisce formattazione
+      new InputRule({
+        find: /\/\/clear\s$/,
+        handler: ({ range, chain }) => {
+          chain().deleteRange(range).clearNodes().unsetAllMarks().run();
+        },
+      }),
+
+      //oggi inserisce data di oggi
+      new InputRule({
+        find: /\/\/oggi\s$/,
+        handler: ({ range, chain }) => {
+          const data = new Date().toLocaleDateString("it-IT", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          });
+          chain()
+            .deleteRange(range)
+            .insertContent(data + " ")
+            .run();
+        },
+      }),
+
+      //code per creare un blocco di codice
       new InputRule({
         find: /\/\/code\s$/,
-        handler: ({ state, range, match, chain }) => {
+        handler: ({ range, chain }) => {
           const codeBLockType = this.editor.schema.nodes.codeBlock;
 
           if (!codeBLockType) return;
@@ -96,9 +128,9 @@ export default Extension.create<CustomShortcutOptions>({
         },
       }),
 
-      //ul | li per creare una lista non ordinata
+      //ul | ol per creare una lista non ordinata
       new InputRule({
-        find: /\/\/(ul|li)\s$/,
+        find: /\/\/(ul|ol)\s$/,
         handler: ({ state, range, match, chain }) => {
           const bulletListType = this.editor.schema.nodes.bulletList;
           const listItemType = this.editor.schema.nodes.listItem;
@@ -152,7 +184,7 @@ export default Extension.create<CustomShortcutOptions>({
       // table-righe-colonne
       new InputRule({
         find: /\/\/table-(\d+)-(\d+)\s$/,
-        handler: ({ state, range, chain }) => {
+        handler: ({ match, state, range, chain }) => {
           const tableNodeType = state.schema.nodes.table;
 
           console.log("tableNodeType:", tableNodeType);
@@ -162,8 +194,8 @@ export default Extension.create<CustomShortcutOptions>({
             return;
           }
 
-          const rows = Number(RegExp.$1);
-          const cols = Number(RegExp.$2);
+          const rows = Number(match[1]);
+          const cols = Number(match[2]);
 
           if (rows <= 0 || cols <= 0) {
             return;
