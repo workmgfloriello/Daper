@@ -229,7 +229,7 @@ export default function HomepageCourses() {
           </h1>
 
           <p className="mt-1 text-sm text-gray-500 dark:text-[#9d9d9d]">
-            Gestisci i tuoi corsi universitari
+            Gestisci tutti i tuoi corsi universitari
           </p>
         </div>
 

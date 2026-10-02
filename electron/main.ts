@@ -2,7 +2,6 @@ import { app, BrowserWindow, Menu } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "node:fs";
-
 import { setDatabase } from "../database/ManageDatabase.ts";
 import { registerIpcHandlers } from "./ipc/index.ts";
 
@@ -18,20 +17,11 @@ let splash: BrowserWindow | null = null;
 // PATH
 // =========================================================
 
-const logoPath = path.join(
-  __dirname,
-  "../public/assets/logo.ico",
-);
+const logoPath = path.join(__dirname, "../public/assets/logo.ico");
 
-const documentsPath = path.join(
-  app.getPath("userData"),
-  "documents",
-);
+const documentsPath = path.join(app.getPath("userData"), "documents");
 
-const databasePath = path.join(
-  app.getPath("userData"),
-  "Daper.db",
-);
+const databasePath = path.join(app.getPath("userData"), "Daper.db");
 
 // =========================================================
 // SPLASH SCREEN
@@ -60,13 +50,9 @@ function createSplashWindow() {
   });
 
   if (isDev) {
-    splash.loadURL(
-      "http://localhost:3000/splash.html",
-    );
+    splash.loadURL("http://localhost:3000/splash.html");
   } else {
-    splash.loadFile(
-      path.join(__dirname, "../out/splash.html"),
-    );
+    splash.loadFile(path.join(__dirname, "../out/splash.html"));
   }
 }
 
@@ -79,7 +65,7 @@ function createWindow() {
     width: 1400,
     height: 900,
 
-    minWidth:1400,
+    minWidth: 1400,
     minHeight: 900,
     frame: false,
 
@@ -107,9 +93,7 @@ function createWindow() {
   if (isDev) {
     win.loadURL("http://localhost:3000");
   } else {
-    win.loadFile(
-      path.join(__dirname, "../out/index.html"),
-    );
+    win.loadFile(path.join(__dirname, "../out/index.html"));
   }
 
   // =======================================================
@@ -150,24 +134,14 @@ function createWindow() {
 async function createDatabase() {
   try {
     if (!fs.existsSync(databasePath)) {
-      fs.writeFileSync(
-        databasePath,
-        "",
-        "utf-8",
-      );
+      fs.writeFileSync(databasePath, "", "utf-8");
     }
 
     setDatabase(databasePath);
 
-    console.log(
-      "Database inizializzato:",
-      databasePath,
-    );
+    console.log("Database inizializzato:", databasePath);
   } catch (error) {
-    console.error(
-      "Errore inizializzazione database:",
-      error,
-    );
+    console.error("Errore inizializzazione database:", error);
 
     throw error;
   }
@@ -210,38 +184,24 @@ app.whenReady().then(async () => {
     // -------------------------------------------------------
 
     if (win) {
-      registerIpcHandlers(
-        win,
-        documentsPath,
-      );
+      registerIpcHandlers(win, documentsPath);
     }
 
-    console.log(
-      "Documents:",
-      documentsPath,
-    );
+    console.log("Documents:", documentsPath);
 
-    console.log(
-      "Database:",
-      databasePath,
-    );
+    console.log("Database:", databasePath);
 
     // -------------------------------------------------------
     // 6. MacOS
     // -------------------------------------------------------
 
     app.on("activate", () => {
-      if (
-        BrowserWindow.getAllWindows().length === 0
-      ) {
+      if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
       }
     });
   } catch (error) {
-    console.error(
-      "Errore durante l'avvio di Daper:",
-      error,
-    );
+    console.error("Errore durante l'avvio di Daper:", error);
 
     // Chiudi lo splash in caso di errore
     if (splash) {
@@ -262,4 +222,3 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-

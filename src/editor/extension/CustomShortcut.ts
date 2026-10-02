@@ -23,7 +23,7 @@ export default Extension.create<CustomShortcutOptions>({
     return [
       //tit[NUmero] per creare un heading di livello [Numero]
       new InputRule({
-        find: /\/\/tit([1-3])\s$/,
+        find: /\/\/tit([1-3])\s$/i,
         handler: ({ range, match, chain }) => {
           const level = parseInt(match[1], 10);
 
@@ -33,7 +33,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //p er creare un paragrafo
       new InputRule({
-        find: /\/\/p\s$/,
+        find: /\/\/p\s$/i,
         handler: ({ range, chain }) => {
           chain().deleteRange(range).setParagraph().run();
         },
@@ -41,7 +41,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //clear pulisce formattazione
       new InputRule({
-        find: /\/\/clear\s$/,
+        find: /\/\/clear\s$/i,
         handler: ({ range, chain }) => {
           chain().deleteRange(range).clearNodes().unsetAllMarks().run();
         },
@@ -49,7 +49,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //oggi inserisce data di oggi
       new InputRule({
-        find: /\/\/oggi\s$/,
+        find: /\/\/oggi\s$/i,
         handler: ({ range, chain }) => {
           const data = new Date().toLocaleDateString("it-IT", {
             day: "numeric",
@@ -65,7 +65,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //code per creare un blocco di codice
       new InputRule({
-        find: /\/\/code\s$/,
+        find: /\/\/code\s$/i,
         handler: ({ range, chain }) => {
           const codeBLockType = this.editor.schema.nodes.codeBlock;
 
@@ -77,7 +77,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //hr per creare una regola orizzontale
       new InputRule({
-        find: /\/\/hr\s$/,
+        find: /\/\/hr\s$/i,
         handler: ({ state, range, match, chain }) => {
           chain().deleteRange(range).setHorizontalRule().run();
         },
@@ -85,7 +85,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //def | warn | example | quote  per creare un blockquote di tipo definizione
       new InputRule({
-        find: /\/\/(quote|def|warn|example)\s$/,
+        find: /\/\/(quote|def|warn|example)\s$/i,
         handler: ({ state, range, match, chain }) => {
           const quoteTypeDigit = match[1].toLowerCase();
 
@@ -117,7 +117,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //todo per creare un task list
       new InputRule({
-        find: /\/\/todo\s$/,
+        find: /\/\/todo\s$/i,
         handler: ({ state, range, match, chain }) => {
           const taskListType = this.editor.schema.nodes.taskList;
           const taskItemType = this.editor.schema.nodes.taskItem;
@@ -130,7 +130,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //ul | ol per creare una lista non ordinata
       new InputRule({
-        find: /\/\/(ul|ol)\s$/,
+        find: /\/\/(ul|ol)\s$/i,
         handler: ({ state, range, match, chain }) => {
           const bulletListType = this.editor.schema.nodes.bulletList;
           const listItemType = this.editor.schema.nodes.listItem;
@@ -160,7 +160,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       //math per creare il blocco di matematica
       new InputRule({
-        find: /\/\/math\s$/,
+        find: /\/\/math\s$/i,
         handler: ({ state, range, chain }) => {
           const mathBlockType = state.schema.nodes.inlineMath;
 
@@ -183,7 +183,7 @@ export default Extension.create<CustomShortcutOptions>({
 
       // table-righe-colonne
       new InputRule({
-        find: /\/\/table-(\d+)-(\d+)\s$/,
+        find: /\/\/table-(\d+)-(\d+)\s$/i,
         handler: ({ match, state, range, chain }) => {
           const tableNodeType = state.schema.nodes.table;
 

@@ -1,6 +1,6 @@
 {
   "name": "Daper",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "main": "electron/main.ts",
@@ -39,6 +39,7 @@
     "@tiptap/pm": "^3.31.2",
     "@tiptap/react": "^3.31.2",
     "@tiptap/starter-kit": "^3.31.2",
+    "electron-updater": "^6.8.9",
     "framer-motion": "^13.4.6",
     "highlight.js": "^11.10.0",
     "katex": "^0.18.5",
@@ -77,6 +78,13 @@
     "directories": {
       "output": "release"
     },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "workmgfloriello",
+        "repo": "Daper"
+      }
+    ],
     "files": [
       "out/**/*",
       "electron/**/*",

@@ -13,28 +13,26 @@ export interface Course {
 }
 
 export type File = {
-  id: string,
-  name: string,
-  directory?: string,
-  course: string,
-  description?: string,
-  created_at: Date,
-  content?: any
-}
+  id: string;
+  name: string;
+  directory?: string;
+  course: string;
+  description?: string;
+  created_at: Date;
+  content?: any;
+};
 
 export type User = {
-  name: string,
-  school: string,
-  type: string
-}
-
-
+  name: string;
+  school: string;
+  type: string;
+};
 
 export type EditorCommandView = {
   name: string;
   symbol: string;
   desc: string;
-}
+};
 
 export type ElectronApi = {
   //corsi
@@ -56,7 +54,13 @@ export type ElectronApi = {
   importFile?: () => any;
 
   //User
-  insertUser?: (user:User) => any
-  selectUser?: () => any,
+  insertUser?: (user: User) => any;
+  selectUser?: () => any;
   updateUser?: (user: User) => any;
-}
+
+ // update
+  OnUpdateAvailable?: (callback: (data: { version: string }) => void) => void;
+  OnUpdateDownloaded?: (callback: (data: { version: string }) => void) => void;
+  installUpdate?: () => Promise<any>;
+  getVersion?: () => Promise<string>;
+};

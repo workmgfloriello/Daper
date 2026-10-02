@@ -1,12 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, RotateCcw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useUser } from "@/lib/context/UserContext";
-import {
-  useTheme,
-  type PaletteColor,
-} from "@/lib/context/ThemeContext";
+import { useTheme, type PaletteColor } from "@/lib/context/ThemeContext";
 
 import type { User } from "@/interface/interface";
 
@@ -30,30 +27,20 @@ const paletteColors: PaletteColor[] = [
 export default function SettingPage() {
   const { user, updateUser } = useUser();
 
-  const {
-    theme,
-    palette,
-    setTheme,
-    updatePaletteColor,
-    resetPalette,
-  } = useTheme();
+  const { theme, palette, setTheme, updatePaletteColor, resetPalette } =
+    useTheme();
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState(
-    user?.name ?? "",
-  );
+  const [name, setName] = useState(user?.name ?? "");
 
-  const [school, setSchool] = useState(
-    user?.school ?? "",
-  );
+  const [school, setSchool] = useState(user?.school ?? "");
 
   const [type, setType] = useState<UserType>(
     (user?.type as UserType) ?? "studente",
   );
 
-  const [showDeleteConfirm, setShowDeleteConfirm] =
-    useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   /* =========================
      PROFILE
@@ -73,17 +60,35 @@ export default function SettingPage() {
     try {
       await updateUser(newUser);
     } catch (error) {
-      console.error(
-        "Errore durante il salvataggio del profilo:",
-        error,
-      );
+      console.error("Errore durante il salvataggio del profilo:", error);
     }
   };
+
+  //UPDATE
+  const [appVersion, setAppVersion] = useState("...");
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [updateDownloaded, setUpdateDownloaded] = useState(false);
+  const [updateVersion, setUpdateVersion] = useState("");
+
+  useEffect(() => {
+    window.electronAPI?.getVersion?.().then((version) => {
+      setAppVersion(version);
+    });
+
+    window.electronAPI?.OnUpdateAvailable?.((data) => {
+      setUpdateAvailable(true);
+      setUpdateVersion(data.version);
+    });
+
+    window.electronAPI?.OnUpdateDownloaded?.((data) => {
+      setUpdateDownloaded(true);
+      setUpdateVersion(data.version);
+    });
+  }, []);
 
   return (
     <main className="h-full min-h-0 overflow-y-auto bg-gray-50 dark:bg-[#181818]">
       <div className="mx-auto w-full max-w-4xl px-6 py-8">
-
         {/* ================= HEADER ================= */}
 
         <button
@@ -101,13 +106,11 @@ export default function SettingPage() {
           </h1>
 
           <p className="mt-1 text-sm text-gray-500 dark:text-[#888888]">
-            Personalizza il tuo profilo e l'aspetto di
-            StuPaper.
+            Personalizza il tuo profilo e l'aspetto di StuPaper.
           </p>
         </div>
 
         <div className="flex flex-col gap-6">
-
           {/* ================= PROFILE ================= */}
 
           <section className="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-[#303030] dark:bg-[#202020]">
@@ -122,7 +125,6 @@ export default function SettingPage() {
             </div>
 
             <div className="flex flex-col gap-5 p-6">
-
               {/* Nome */}
 
               <div className="flex flex-col gap-2">
@@ -137,9 +139,7 @@ export default function SettingPage() {
                   id="name"
                   type="text"
                   value={name}
-                  onChange={(e) =>
-                    setName(e.target.value)
-                  }
+                  onChange={(e) => setName(e.target.value)}
                   className="h-11 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm text-gray-900 outline-none transition focus:border-[var(--color1)] focus:ring-2 focus:ring-[var(--color1)]/20 dark:border-[#383838] dark:bg-[#181818] dark:text-[#eeeeee]"
                 />
               </div>
@@ -158,9 +158,7 @@ export default function SettingPage() {
                   id="school"
                   type="text"
                   value={school}
-                  onChange={(e) =>
-                    setSchool(e.target.value)
-                  }
+                  onChange={(e) => setSchool(e.target.value)}
                   className="h-11 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm text-gray-900 outline-none transition focus:border-[var(--color1)] focus:ring-2 focus:ring-[var(--color1)]/20 dark:border-[#383838] dark:bg-[#181818] dark:text-[#eeeeee]"
                 />
               </div>
@@ -178,24 +176,14 @@ export default function SettingPage() {
                 <select
                   id="type"
                   value={type}
-                  onChange={(e) =>
-                    setType(
-                      e.target.value as UserType,
-                    )
-                  }
+                  onChange={(e) => setType(e.target.value as UserType)}
                   className="h-11 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm text-gray-900 outline-none transition focus:border-[var(--color1)] focus:ring-2 focus:ring-[var(--color1)]/20 dark:border-[#383838] dark:bg-[#181818] dark:text-[#eeeeee]"
                 >
-                  <option value="studente">
-                    Studente
-                  </option>
+                  <option value="studente">Studente</option>
 
-                  <option value="docente">
-                    Docente
-                  </option>
+                  <option value="docente">Docente</option>
 
-                  <option value="personale">
-                    Personale
-                  </option>
+                  <option value="personale">Personale</option>
                 </select>
               </div>
 
@@ -227,7 +215,6 @@ export default function SettingPage() {
             </div>
 
             <div className="flex flex-col gap-8 p-6">
-
               {/* ================= THEME ================= */}
 
               <div>
@@ -236,7 +223,6 @@ export default function SettingPage() {
                 </h3>
 
                 <div className="mt-3 grid grid-cols-2 gap-3">
-
                   {/* Chiaro */}
 
                   <button
@@ -297,8 +283,7 @@ export default function SettingPage() {
                     </h3>
 
                     <p className="mt-1 text-xs text-gray-500 dark:text-[#777777]">
-                      Personalizza i 12 colori utilizzati
-                      in tutta StuPaper.
+                      Personalizza i 12 colori utilizzati in tutta StuPaper.
                     </p>
                   </div>
 
@@ -323,18 +308,14 @@ export default function SettingPage() {
                       <div
                         className="relative h-12 w-12 overflow-hidden rounded-xl border border-gray-200 shadow-sm transition group-hover:scale-105 dark:border-[#383838]"
                         style={{
-                          backgroundColor:
-                            palette[color],
+                          backgroundColor: palette[color],
                         }}
                       >
                         <input
                           type="color"
                           value={palette[color]}
                           onChange={(e) =>
-                            updatePaletteColor(
-                              color,
-                              e.target.value,
-                            )
+                            updatePaletteColor(color, e.target.value)
                           }
                           className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                         />
@@ -360,7 +341,7 @@ export default function SettingPage() {
             <div className="flex items-center justify-between px-6 py-5">
               <div>
                 <h2 className="text-sm font-semibold text-gray-900 dark:text-[#eeeeee]">
-                  StuPaper
+                  Daper
                 </h2>
 
                 <p className="mt-1 text-xs text-gray-500 dark:text-[#777777]">
@@ -368,9 +349,27 @@ export default function SettingPage() {
                 </p>
               </div>
 
-              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-500 dark:bg-[#303030] dark:text-[#888888]">
-                Versione 1.0.0
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-500 dark:bg-[#303030] dark:text-[#888888]">
+                  Versione {appVersion}
+                </span>
+
+                {updateAvailable && !updateDownloaded && (
+                  <span className="rounded-lg bg-[var(--color1)]/10 px-3 py-1 text-xs font-medium text-[var(--color1)]">
+                    Disponibile {updateVersion}
+                  </span>
+                )}
+
+                {updateDownloaded && (
+                  <button
+                    type="button"
+                    onClick={() => window.electronAPI?.installUpdate?.()}
+                    className="rounded-lg bg-[var(--color1)] px-3 py-2 text-xs font-semibold text-white transition hover:opacity-90"
+                  >
+                    Aggiorna
+                  </button>
+                )}
+              </div>
             </div>
           </section>
         </div>
