@@ -351,7 +351,7 @@ export default function SettingPage() {
 
               <div className="flex items-center gap-3">
                 <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-500 dark:bg-[#303030] dark:text-[#888888]">
-                  Versione {appVersion}
+                  Versione APP {appVersion}
                 </span>
 
                 {updateAvailable && !updateDownloaded && (
