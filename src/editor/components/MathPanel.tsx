@@ -1,4 +1,3 @@
-"use client";
 
 import { useEffect, useRef, useState } from "react";
 import type { MathfieldElement } from "mathlive";
@@ -245,6 +244,7 @@ export default function MathPanel({ onInsert, onClose }: MathPanelProps) {
   const [ready, setReady] = useState(false);
   const mfRef = useRef<MathfieldElement | null>(null);
   const editorWrapRef = useRef<HTMLDivElement | null>(null);
+  const MAX_LATEX_LENGTH = 1000; // Limite massimo di caratteri LaTeX per evitare crash del browser
 
   // Carica MathLive lato client, registra il custom element <math-field>
   // e disattiva i suoni di feedback (i file .wav non sono serviti da
@@ -276,6 +276,10 @@ export default function MathPanel({ onInsert, onClose }: MathPanelProps) {
 
   const handleInsert = () => {
     if (!latex.trim()) return;
+    if (latex.length > MAX_LATEX_LENGTH) {
+      console.warn("LaTeX string is too long");
+      return;
+    }
     onInsert(latex);
     mfRef.current?.setValue("");
     setLatex("");
@@ -290,8 +294,6 @@ export default function MathPanel({ onInsert, onClose }: MathPanelProps) {
   };
 
   // Inserisce un simbolo/struttura nel punto in cui si trova il cursore
-  // (o intorno alla selezione, se c'è testo selezionato nel campo).
-  // "placeholder" fa saltare automaticamente il cursore nel primo campo vuoto.
   const insertSymbol = (value: string) => {
     const mf = mfRef.current;
     if (!mf) return;

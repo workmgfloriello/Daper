@@ -84,6 +84,8 @@ export default function SettingPage() {
       setUpdateDownloaded(true);
       setUpdateVersion(data.version);
     });
+
+    console.log("UpdateDownloaded:", updateDownloaded);
   }, []);
 
   return (

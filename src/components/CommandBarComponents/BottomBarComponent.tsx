@@ -1,14 +1,16 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { EditorCommandView } from "@/interface/interface.ts";
+import CustomEditorGetterInstance from "@/editor/extension/CustomEditorGetter";
 
 type CommandCategory = {
   name: string;
   commands: EditorCommandView[];
 };
 
-export default function BottomBarComponent() {
+export default function BottomBarComponent({ showCommandPalette, setShowCommandPalette }: { showCommandPalette: boolean, setShowCommandPalette: any }) {
   const [search, setSearch] = useState("");
+  const [searchFocus, setSearchFocus] = useState(false);
 
   const categories: CommandCategory[] = [
     {
@@ -143,6 +145,53 @@ export default function BottomBarComponent() {
       .filter((category) => category.commands.length > 0);
   }, [search]);
 
+  const handleSearchFocus = (value: boolean) => {
+    setSearchFocus(value);
+  }
+
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Palette aperta
+      if (showCommandPalette && !searchFocus) {
+        // Ignora tasti speciali
+        if (e.key.length !== 1) return;
+
+        e.preventDefault();
+
+        const position = CustomEditorGetterInstance.getCursorPosition();
+
+        setShowCommandPalette(false);
+        setSearchFocus(false);
+
+        if (position) {
+          CustomEditorGetterInstance.writeInCursorPosition(
+            position,
+            e.key
+          );
+        }
+
+        return;
+      }
+
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [searchFocus]);
+
+
+  const handleCommandClick = (command: string) => {
+    const position = CustomEditorGetterInstance.getCursorPosition();
+
+    CustomEditorGetterInstance.writeInCursorPosition(position, command);
+    setShowCommandPalette(false);
+    setSearchFocus(false);
+  }
+
   return (
     <div className="absolute bottom-0 left-0 z-[200] max-h-[35%] w-full overflow-y-auto border-t border-gray-200 bg-indigo-100 p-4 shadow-lg dark:border-[#3a3d3e] dark:bg-[#1e1f20]">
       {/* Header */}
@@ -159,12 +208,14 @@ export default function BottomBarComponent() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onClick={() => handleSearchFocus(true)}
+            onBlur={() => handleSearchFocus(false)}
             placeholder="Cerca un comando..."
             className="h-9 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-[#3a3d3e] dark:bg-[#25282a] dark:text-[#cccccc] dark:placeholder:text-[#777777] dark:focus:border-[#4f6fa3] dark:focus:ring-[#264f78]"
           />
+
         </div>
       </div>
-
       {/* Categorie */}
       <div className="space-y-5">
         {filteredCategories.map((category) => (
@@ -177,6 +228,7 @@ export default function BottomBarComponent() {
               {category.commands.map((command) => (
                 <button
                   key={command.symbol}
+                  onClick={() => handleCommandClick(command.symbol)}
                   type="button"
                   className="group flex items-start gap-3 rounded-lg border border-gray-200 bg-white p-3 text-left transition hover:border-indigo-300 hover:bg-indigo-50 dark:border-[#3a3d3e] dark:bg-[#1e1f20] dark:hover:border-[#4f6fa3] dark:hover:bg-[#25282a]"
                 >
