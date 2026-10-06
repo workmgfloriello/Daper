@@ -195,10 +195,21 @@ export default function BottomBarComponent({ showCommandPalette, setShowCommandP
   return (
     <div className="absolute bottom-0 left-0 z-[200] max-h-[35%] w-full overflow-y-auto border-t border-gray-200 bg-indigo-100 p-4 shadow-lg dark:border-[#3a3d3e] dark:bg-[#1e1f20]">
       {/* Header */}
+
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h1 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-[#cccccc]">
-          Lista dei Comandi
-        </h1>
+        <div>
+          <h1 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-[#cccccc]">
+            Lista dei Comandi
+          </h1>
+
+          <p className="mt-1 text-xs text-gray-500 dark:text-[#888888]">
+            Clicca su un comando per inserirlo nell&apos;editor, poi premi{" "}
+            <kbd className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 font-mono text-[11px] text-gray-700 dark:border-[#3a3d3e] dark:bg-[#2a2d2e] dark:text-[#cccccc]">
+              Spazio
+            </kbd>{" "}
+            per attivarlo.
+          </p>
+        </div>
 
         {/* Ricerca */}
         <div className="relative w-full max-w-sm">
@@ -213,9 +224,10 @@ export default function BottomBarComponent({ showCommandPalette, setShowCommandP
             placeholder="Cerca un comando..."
             className="h-9 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-[#3a3d3e] dark:bg-[#25282a] dark:text-[#cccccc] dark:placeholder:text-[#777777] dark:focus:border-[#4f6fa3] dark:focus:ring-[#264f78]"
           />
-
         </div>
       </div>
+
+
       {/* Categorie */}
       <div className="space-y-5">
         {filteredCategories.map((category) => (

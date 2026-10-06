@@ -115,9 +115,9 @@ function createWindow() {
   // DEVTOOLS
   // =======================================================
 
-  //if (isDev) {
+  if (isDev) {
     win.webContents.openDevTools();
-  //}
+  }
 
   // =======================================================
   // CLOSED

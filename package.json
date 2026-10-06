@@ -1,8 +1,9 @@
 {
   "name": "Daper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "type": "module",
+  "author": {"name": "Floriello Michele Gabriele", "email": "workmgfloriello@gmail.com"},
   "main": "electron/main.ts",
   "scripts": {
     "dev": "vite",
@@ -74,6 +75,7 @@
   },
   "build": {
     "appId": "com.daper.app",
+    "artifactName": "Daper-Setup-${version}.${ext}",
     "productName": "Daper",
     "directories": {
       "output": "release"
