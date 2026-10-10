@@ -36,7 +36,7 @@ import { useParams } from "react-router-dom";
 import FileManager from "../lib/manager/FileManager";
 import FileBar from "./components/FileBar";
 import BottomBar from "./components/BottomBar";
-
+import CustomEditorGetterInstance from "./extension/CustomEditorGetter";
 
 const lowlight = createLowlight({
   javascript,
@@ -197,6 +197,8 @@ export default function Editor({
 
     void openFile();
   }, [editor, fileName]);
+
+  CustomEditorGetterInstance.setEditor(editor);
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden bg-gray-200 dark:bg-[#181818]">

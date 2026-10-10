@@ -228,11 +228,10 @@ export default function SettingPage() {
                   <button
                     type="button"
                     onClick={() => setTheme("light")}
-                    className={`rounded-xl border p-4 text-left transition ${
-                      theme === "light"
+                    className={`rounded-xl border p-4 text-left transition ${theme === "light"
                         ? "border-[var(--color1)] bg-[var(--color1)]/10"
                         : "border-gray-200 hover:bg-gray-50 dark:border-[#383838] dark:hover:bg-[#181818]"
-                    }`}
+                      }`}
                   >
                     <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-700">
                       ☀
@@ -252,11 +251,10 @@ export default function SettingPage() {
                   <button
                     type="button"
                     onClick={() => setTheme("dark")}
-                    className={`rounded-xl border p-4 text-left transition ${
-                      theme === "dark"
+                    className={`rounded-xl border p-4 text-left transition ${theme === "dark"
                         ? "border-[var(--color1)] bg-[var(--color1)]/10"
                         : "border-gray-200 hover:bg-gray-50 dark:border-[#383838] dark:hover:bg-[#181818]"
-                    }`}
+                      }`}
                   >
                     <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-[#202020] text-gray-200">
                       ☾

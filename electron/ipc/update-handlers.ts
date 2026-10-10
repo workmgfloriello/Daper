@@ -16,13 +16,20 @@ export function registerAutoUpdater(win: BrowserWindow) {
     updateLog("Controllo aggiornamenti...");
   });
 
-  autoUpdater.on("update-available", (info) => {
-    updateLog("Aggiornamento disponibile: " + info.version);
+  autoUpdater.on("update-available", async (info) => {
+  updateLog("Aggiornamento disponibile: " + info.version);
 
-    win.webContents.send("update-available", {
-      version: info.version,
-    });
+  win.webContents.send("update-available", {
+    version: info.version,
   });
+
+  try {
+    await autoUpdater.downloadUpdate();
+    updateLog("Download aggiornamento completato");
+  } catch (error: any) {
+    updateLog("Errore download: " + error.message);
+  }
+});
 
   autoUpdater.on("update-not-available", (info) => {
     updateLog("Nessun aggiornamento disponibile: " + info.version);

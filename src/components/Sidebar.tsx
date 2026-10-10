@@ -19,7 +19,6 @@ import { useCourses } from "../lib/context/CoursesContext";
 import { useTheme } from "@/lib/context/ThemeContext";
 import { useUser } from "@/lib/context/UserContext";
 import BottomBarComponent from "@/components/CommandBarComponents/BottomBarComponent.tsx";
-import { AnimatePresence } from "framer-motion";
 
 const navItems = [
   {
@@ -49,7 +48,7 @@ export function Sidebar() {
 
   const [open, setOpen] = useState(true);
   const [coursesOpen, setCoursesOpen] = useState(true);
-  const [showCommandPalete, setShowCommandPalette] = useState(false);
+  const [showCommandPalette, setShowCommandPalette] = useState(false);
 
   const { courses } = useCourses();
   const { user } = useUser();
@@ -135,7 +134,7 @@ export function Sidebar() {
       <div className="flex shrink-0 flex-col gap-1 px-3">
         <button
           type="button"
-          onClick={() => setShowCommandPalette(!showCommandPalete)}
+          onClick={() => setShowCommandPalette(!showCommandPalette)}
           className="flex h-10 w-full shrink-0 items-center justify-center gap-3 rounded-lg px-3 text-sm transition hover:bg-indigo-200 hover:text-gray-900 dark:hover:bg-[#2a2d2e] dark:hover:text-[#cccccc] bg-indigo-300 text-indigo-900 dark:bg-[#264f78] dark:text-white"
         >
           <Code2Icon className="h-4 w-4 shrink-0" />
@@ -237,7 +236,7 @@ export function Sidebar() {
 
 
   {/*Mostro Palette Comandi*/}
-        {showCommandPalete && <BottomBarComponent />}
+        {showCommandPalette && <BottomBarComponent showCommandPalette={showCommandPalette} setShowCommandPalette={setShowCommandPalette} />}
   </>
 )
 }
