@@ -12,7 +12,6 @@ import {
 import type { File } from "../../src/interface/interface.ts";
 
 export function registerFileHandlers(win: BrowserWindow, dirPath: string) {
-
   //Creare File
   ipcMain.handle("file:create", async (_event, file: File) => {
     const filePath = path.join(dirPath, `${file.name}.json`);
@@ -46,10 +45,13 @@ export function registerFileHandlers(win: BrowserWindow, dirPath: string) {
         console.log(`File ${file.name}.json creato con successo in ${dirPath}`);
         return { success: true, file: note };
       } catch (error) {
-        console.error(`Errore durante la creazione del file ${file.name}.json:`, error);
+        console.error(
+          `Errore durante la creazione del file ${file.name}.json:`,
+          error,
+        );
         return { success: false, file: null };
       }
-    }else{
+    } else {
       return { success: false, file: null };
     }
   });
@@ -194,6 +196,32 @@ export function registerFileHandlers(win: BrowserWindow, dirPath: string) {
       canceled: false,
       filePath,
     };
+  });
+
+  //Esportare JSON
+  ipcMain.handle("export-json", async (_event, fileName: string) => {
+    if (!win) {
+      throw new Error("Finestra principale non disponibile");
+    }
+    if (fileName == "") {
+      throw new Error("Nome file vuoto");
+    }
+
+    const content = fs.readFileSync(`${dirPath}/${fileName}.json`, "utf-8");
+
+    const showDialog = await dialog.showSaveDialog(win, {
+      title: "Exporta JSON",
+      defaultPath: "documento.json",
+      buttonLabel: "Salva File",
+      filters: [{ name: "JSON", extensions: ["json"] }],
+    });
+
+    if (!showDialog.canceled && showDialog.filePath) {
+      fs.writeFileSync(showDialog.filePath, content, "utf-8");
+      console.log("File salvato con successo in:", showDialog.filePath);
+    } else {
+      throw new Error("Erroe Salvataggio");
+    }
   });
 
   //selezione file REF dal db

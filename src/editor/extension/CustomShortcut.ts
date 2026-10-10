@@ -141,7 +141,7 @@ export default Extension.create<CustomShortcutOptions>({
             case "ul":
               listTypeToUse = bulletListType;
               break;
-            case "li":
+            case "ol":
               listTypeToUse = listItemType;
               break;
             default:

@@ -79,7 +79,7 @@ function Divider() {
   return <div className="mx-1 h-6 w-px bg-indigo-200 dark:bg-[#3c3c3c]" />;
 }
 
-const DEFAULT_TEXT_COLOR = "#1e1b4b"; // indigo-950, usato se non è ancora stato scelto nessun colore
+const DEFAULT_TEXT_COLOR = "#000000"; // nero, usato se non è ancora stato scelto nessun colore
 
 function ColorPicker({ editor }: { editor: Editor }) {
   const [isOpen, setIsOpen] = useState(false);

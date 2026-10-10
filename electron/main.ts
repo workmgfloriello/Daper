@@ -65,7 +65,7 @@ function createWindow() {
     width: 1400,
     height: 900,
 
-    minWidth: 1400,
+    minWidth: 900,
     minHeight: 900,
     frame: false,
 

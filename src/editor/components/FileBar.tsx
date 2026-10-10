@@ -4,11 +4,11 @@ import { Editor } from "@tiptap/react";
 import {
   ChevronDown,
   Save,
-  FolderOpen,
   Download,
   Clock3,
   Pencil,
   Trash2,
+  FileBracesCorner,
 } from "lucide-react";
 
 import FileManager from "../../lib/manager/FileManager";
@@ -103,6 +103,12 @@ export default function FileBar({ editor, fileMeta }: FileBarProps) {
   const handleExportClick = () => {
     console.log("ESPORTO PDF");
     FileManager.exportPDF();
+    setOpen(false);
+  };
+
+   const handleExportClickJSON = (fileName:string) => {
+    console.log("ESPORTO JSON");
+    FileManager.exportJSON(fileName);
     setOpen(false);
   };
 
@@ -208,23 +214,6 @@ export default function FileBar({ editor, fileMeta }: FileBarProps) {
 
             <button
               type="button"
-              onClick={handleOpenClick}
-              className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-[#cccccc] dark:hover:bg-[#2a2d2e]"
-            >
-              <FolderOpen
-                size={17}
-                className="shrink-0 text-indigo-600 dark:text-[#4daafc]"
-              />
-              <div className="flex min-w-0 flex-col items-start">
-                <span className="font-medium">Apri file</span>
-                <span className="text-xs text-gray-400 dark:text-[#9d9d9d]">
-                  Apri un documento JSON
-                </span>
-              </div>
-            </button>
-
-            <button
-              type="button"
               onClick={handleExportClick}
               className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-[#cccccc] dark:hover:bg-[#2a2d2e]"
             >
@@ -236,6 +225,23 @@ export default function FileBar({ editor, fileMeta }: FileBarProps) {
                 <span className="font-medium">Esporta file</span>
                 <span className="text-xs text-gray-400 dark:text-[#9d9d9d]">
                   Esporta come PDF
+                </span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleExportClickJSON(fileMeta?.name)}
+              className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-[#cccccc] dark:hover:bg-[#2a2d2e]"
+            >
+              <FileBracesCorner 
+                size={17}
+                className="shrink-0 text-indigo-600 dark:text-[#4daafc]"
+              />
+              <div className="flex min-w-0 flex-col items-start">
+                <span className="font-medium">Esporta file</span>
+                <span className="text-xs text-gray-400 dark:text-[#9d9d9d]">
+                  Esporta come JSON
                 </span>
               </div>
             </button>

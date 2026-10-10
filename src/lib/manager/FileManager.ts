@@ -132,6 +132,15 @@ class CustomFileManager {
     window.electronAPI.exportPDF();
   }
 
+  exportJSON(fileName: string){
+    // Funzione che permette di esportare in JSON
+    if(!window.electronAPI?.exportJSON){
+        console.error("Export JSON non disponibile");
+      return;
+    }
+    window.electronAPI?.exportJSON?.(fileName);
+  }
+
   renameFile(fileName: string, newName: string) {
     const rename = window.electronAPI?.renameFile?.(fileName, newName);
     return rename;

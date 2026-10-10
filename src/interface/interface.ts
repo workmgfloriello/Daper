@@ -46,6 +46,7 @@ export type ElectronApi = {
   //file
   createFile?: (file: File) => any;
   exportPDF?: () => void | Promise<void>;
+  exportJSON?: (fileName: string) => any;
   openFile?: (fileName: string) => any;
   saveFile?: (data: any, name: any) => any;
   delateFile?: (fileName: string) => any;
@@ -58,11 +59,10 @@ export type ElectronApi = {
   selectUser?: () => any;
   updateUser?: (user: User) => any;
 
- // update
   // update
-onUpdateAvailable?: (callback: (data: { version: string }) => void) => void;
-onUpdateDownloaded?: (callback: (data: { version: string }) => void) => void;
-downloadUpdate?: () => Promise<any>;
-installUpdate?: () => Promise<any>;
-getVersion?: () => Promise<string>;
+  onUpdateAvailable?: (callback: (data: { version: string }) => void) => void;
+  onUpdateDownloaded?: (callback: (data: { version: string }) => void) => void;
+  downloadUpdate?: () => Promise<any>;
+  installUpdate?: () => Promise<any>;
+  getVersion?: () => Promise<string>;
 };

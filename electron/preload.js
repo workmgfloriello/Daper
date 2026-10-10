@@ -11,6 +11,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   createFile: (file) => ipcRenderer.invoke("file:create", file),
   saveFile: (data, name) => ipcRenderer.invoke("file:save", data, name),
   exportPDF: () => ipcRenderer.invoke("export-pdf"),
+  exportJSON: (fileName) => ipcRenderer.invoke("export-json",fileName),
   selectFile: () => ipcRenderer.invoke("file:select"),
   delateFile: (fileName) => ipcRenderer.invoke("file:delate", fileName),
   renameFile: (fileName, newName) =>
